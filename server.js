@@ -7,7 +7,10 @@ const cors = require('cors');
 const axios = require('axios');
 const io = require('socket.io')(server, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://phuong-unsallow-madge.ngrok-free.dev"
+    ],
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -39,7 +42,10 @@ const AI_RATE_LIMIT = 5000; // 5 seconds between requests per user
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  origin: [
+    "http://localhost:3000",
+    "https://phuong-unsallow-madge.ngrok-free.dev"
+  ],
   credentials: true,
   methods: ["GET", "POST"]
 }));
@@ -382,7 +388,7 @@ app.post('/api/ai-chat', verifyAuthMiddleware, async (req, res) => {
         'Content-Type': 'application/json'
       },
       data: {
-        model: 'llama-3.1-8b-instant', // Fast and free model
+        model: 'llama-3.1-8b-instant',
         messages: [
           {
             role: 'user',
